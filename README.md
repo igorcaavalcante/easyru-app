@@ -12,5 +12,8 @@ Um aplicativo feito em Ionic para uso do EasyRU pelos estudantes. Possuindo Plat
 
 >sudo apt install nodejs
 
-## Execução de Teste
+## Instalando o Ionic
+>npm install -g ionic
+
+## Executando o projeto
 >ionic serve
