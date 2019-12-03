@@ -1,0 +1,38 @@
+<ion-content padding center text-center>
+
+  <h1>EasyRU</h1>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Login</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+
+        <ion-item class="loginFormButtons">
+          <ion-label position="floating">CPF</ion-label>
+          <ion-input [class.is-danger]="user.cpf.message" [(ngModel)]="user.cpf.value" type="text"
+            [brmasker]="{mask: '000.000.000-00', type:'num'}" maxlength="14">
+          </ion-input>
+          <p *ngIf="user.cpf.message" class="danger">{{ user.cpf.message }}</p>
+        </ion-item>
+
+        <ion-item class="loginFormButtons">
+          <ion-label position="floating">Senha</ion-label>
+          <ion-input [class.is-danger]="user.cpf.message" [(ngModel)]="user.password.value" type="password">
+          </ion-input>
+          <p *ngIf="user.password.message" class="danger">{{ user.password.message }}</p>
+        </ion-item>
+
+        <div>
+          <ion-button class="loginButton" color="success" expand="block" (click)="login()">Entrar</ion-button>
+        </div>
+
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button fill="outline" routerLink="/register">Cadastre-se</ion-button>
+
+</ion-content>

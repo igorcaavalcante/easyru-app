@@ -1,5 +1,5 @@
 # EasyRU App
-Um aplicativo feito em Ionic para uso do EasyRU pelos estudantes. Possuindo Plataforma App e [Web](https://github.com/igorcaavalcante/easyru).
+Um aplicativo feito em Ionic para uso do [EasyRU](https://github.com/igorcaavalcante/easyru) pelos estudantes. Possuindo Plataforma App e [Web](https://github.com/igorcaavalcante/easyru).
 
 ## Requerimentos
 * **[Node.js >= 12.1](https://nodejs.org/en/download/)**

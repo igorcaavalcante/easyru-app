@@ -1,27 +1,93 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
-import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Platform, LoadingController } from "@ionic/angular";
+import { SplashScreen } from "@ionic-native/splash-screen/ngx";
+import { StatusBar } from "@ionic-native/status-bar/ngx";
+import { AuthService } from "./services/auth/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss']
+    selector: "app-root",
+    templateUrl: "app.component.html",
+    styleUrls: ["app.component.scss"]
 })
-export class AppComponent {
-  constructor(
-    private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar
-  ) {
-    this.initializeApp();
-  }
+export class AppComponent implements OnInit {
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-    });
-  }
+    public appPages = [
+        {
+            title: "Home",
+            url: "/home",
+            icon: "home"
+        },
+    ];
+
+    private user: any;
+    private refreshCheck: any;
+
+    constructor(
+        private platform: Platform,
+        private loadingController: LoadingController,
+        private splashScreen: SplashScreen,
+        private statusBar: StatusBar,
+        private authService: AuthService,
+        private router: Router
+    ) {
+        this.initializeApp();
+    }
+
+    initializeApp() {
+        this.platform.ready().then(() => {
+            this.statusBar.styleDefault();
+            this.splashScreen.hide();
+        });
+    }
+
+    public async ngOnInit() {
+
+        const loading = await this.loadingController.create();
+        loading.present();
+
+        this.authService.updateUserData();
+
+        this.authService.user.subscribe(async (user) => {
+
+            this.user = user;
+
+            if (this.user.logged) {
+                await this.timeRecursive();
+            } else {
+                this.router.navigate(["login"]);
+            }
+
+        });
+
+        this.authService.updateUserData();
+
+        loading.dismiss();
+    }
+
+    private async timeRecursive(): Promise<void> {
+
+        if (this.refreshCheck) {
+            return;
+        }
+
+        if (this.user && this.user.logged) {
+            await this.authService.refreshAuth();
+        }
+
+        this.refreshCheck = setInterval(() => {
+            if (this.user && this.user.logged) {
+
+                const limit = (new Date(JSON.parse(this.authService.auth).tokenExpires).getTime() / 1000);
+                const current = new Date().getTime() / 1000;
+
+                if ((limit - current) <= 300) {
+                    this.authService.refreshAuth();
+                }
+            }
+
+        }, 5000);
+
+    }
 }
