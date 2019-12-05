@@ -1,16 +1,22 @@
 <ion-content *ngIf="ready">
 
+
   <div class="top">
+
     <div>
       <ion-icon name="menu" class="menu-button" (click)="toggle()"></ion-icon>
+      <ion-icon class="qrcode" routerLink="/qrcode" name="qr-scanner" slot="end"></ion-icon>
     </div>
 
     <div class="balance">
       <!--{{credit | currency:'BRL' | brCurrency}}-->
       R$ 200,00
+    
       <p class="balance-text">saldo disponível</p>
     </div>
 
   </div>
+
+
 
 </ion-content>

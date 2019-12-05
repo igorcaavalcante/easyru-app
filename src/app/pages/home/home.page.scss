@@ -8,6 +8,7 @@
   padding: 4%;
   font-size: 25px;
   color: white;
+  border: no-border;
 }
 
 .balance {
@@ -26,4 +27,10 @@
 
 .balance-text {
   font-size: 12px;
+}
+
+.qrcode{
+  border: no-border;
+  margin-left: 225px;
+  color: white;
 }
