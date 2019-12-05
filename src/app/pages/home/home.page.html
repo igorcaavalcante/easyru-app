@@ -5,15 +5,19 @@
 
     <div>
       <ion-icon name="menu" class="menu-button" (click)="toggle()"></ion-icon>
-      <ion-icon class="qrcode" routerLink="/qrcode" name="qr-scanner" slot="end"></ion-icon>
     </div>
 
     <div class="balance">
-      <!--{{credit | currency:'BRL' | brCurrency}}-->
-      R$ 200,00
+      {{this.authService.data.credit | currency:'BRL' | brCurrency}}
     
       <p class="balance-text">saldo disponível</p>
     </div>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button [routerLink]="['/qrcode']">
+        <ion-icon name="qr-scanner" class="qrcode"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
 
   </div>
 

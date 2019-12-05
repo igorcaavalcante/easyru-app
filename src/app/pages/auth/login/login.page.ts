@@ -46,7 +46,7 @@ export class LoginPage implements OnInit {
         this.user.cpf.message = null;
         this.user.password.message = null;
 
-        this.user.cpf.value = this.user.cpf.value.replace(/\D+/g, "");
+        // this.user.cpf.value = this.user.cpf.value.replace(/\D+/g, "");
 
         if (!this.utils.isCpf(this.user.cpf.value)) {
             this.user.cpf.message = "CPF inválido!";

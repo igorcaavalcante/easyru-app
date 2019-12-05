@@ -28,6 +28,6 @@ export class Api {
     }
 
     public static get url(): string {
-        return "https://clube-de-vantagens.herokuapp.com/";
+        return "http://127.0.0.1:8000/api/";
     }
 }

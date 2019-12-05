@@ -13,6 +13,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { HomePage } from "./pages/home/home.page";
 import { LoginPage } from "./pages/auth/login/login.page";
 import { RegisterPage } from "./pages/auth/register/register.page";
+import { QrcodePage } from "./pages/qrcode/qrcode.page";
 
 import { BrMaskerModule } from "br-mask";
 import { BrCurrencyPipe } from "./pipes/br-currency.pipe";
@@ -24,6 +25,7 @@ import { BrCurrencyPipe } from "./pipes/br-currency.pipe";
     LoginPage,
     RegisterPage,
     BrCurrencyPipe,
+    QrcodePage
   ],
   entryComponents: [],
   imports: [

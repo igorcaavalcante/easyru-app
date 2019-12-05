@@ -32,7 +32,7 @@ export class AuthService {
 
     public login(cpf: string, password: string): Promise<any> {
         return new Promise((resolve) => {
-            this.http.post(Api.url + "users/login", { cpf, password }, { headers: Api.options })
+            this.http.post(Api.url + `consumer/${cpf}`, { cpf, password }/*, { headers: Api.options }*/)
                 .subscribe(
                     (result) => {
                         localStorage.setItem("logged", "true");
@@ -58,7 +58,7 @@ export class AuthService {
 
     private getMe(): Promise<any> {
         return new Promise((resolve) => {
-            this.http.get(Api.url + "users/me", { headers: Api.options })
+            this.http.get(Api.url + `consumer/${this.data.cpf}`/*, { headers: Api.options }*/)
                 .subscribe(
                     (data) => {
                         if (data) {
@@ -80,7 +80,7 @@ export class AuthService {
 
     public register(user: any): Promise<any> {
         return new Promise((resolve) => {
-            this.http.post(Api.url + "users", {user}, { headers: Api.options })
+            this.http.post(Api.url + "users", { user }, { headers: Api.options })
                 .subscribe(
                     async () => {
                         await this.login(user.cpf, user.password);
