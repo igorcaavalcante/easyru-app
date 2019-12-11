@@ -12,7 +12,6 @@ import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { HomePage } from "./pages/home/home.page";
 import { LoginPage } from "./pages/auth/login/login.page";
-import { RegisterPage } from "./pages/auth/register/register.page";
 import { QrcodePage } from "./pages/qrcode/qrcode.page";
 
 import { BrMaskerModule } from "br-mask";
@@ -23,7 +22,6 @@ import { BrCurrencyPipe } from "./pipes/br-currency.pipe";
     AppComponent,
     HomePage,
     LoginPage,
-    RegisterPage,
     BrCurrencyPipe,
     QrcodePage
   ],
@@ -43,4 +41,4 @@ import { BrCurrencyPipe } from "./pipes/br-currency.pipe";
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
