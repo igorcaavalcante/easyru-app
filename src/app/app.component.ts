@@ -53,9 +53,7 @@ export class AppComponent implements OnInit {
 
             this.user = user;
 
-            if (this.user.logged) {
-                await this.timeRecursive();
-            } else {
+            if (!this.user.logged) {
                 this.router.navigate(["login"]);
             }
 
@@ -64,24 +62,5 @@ export class AppComponent implements OnInit {
         this.authService.updateUserData();
 
         loading.dismiss();
-    }
-
-    private async timeRecursive(): Promise<void> {
-
-        if (this.refreshCheck) {
-            return;
-        }
-
-        if (this.user && this.user.logged) {
-            await this.authService.refreshAuth();
-        }
-
-        this.refreshCheck = setInterval(() => {
-            if (this.user && this.user.logged) {
-                this.authService.refreshAuth();
-            }
-
-        }, 180000);
-
     }
 }

@@ -25,14 +25,16 @@ export class AuthService {
 
     public async updateUserData(): Promise<void> {
         this.logged = localStorage.getItem("logged") === "true" ? true : false;
+        console.log("logado: " + this.logged);
         this.data = this.logged ? await this.getMe() : false;
+        console.log("data: ");
+        console.log(this.data);
         this.token = localStorage.getItem("token");
         this.user.next({ logged: this.logged, data: this.data, token: this.token });
     }
 
     public login(cpf: string, password: string): Promise<any> {
         return new Promise((resolve) => {
-            console.log(Api.options);
             this.http.post(Api.url + `auth/`, { username: cpf, password }, { headers: Api.options })
                 .subscribe(
                     (result: any) => {
@@ -59,7 +61,8 @@ export class AuthService {
 
     private getMe(): Promise<any> {
         return new Promise((resolve) => {
-            this.http.get(Api.url + `consumer/`, { headers: Api.options })
+            console.log(Api.url + `consumer/home/`);
+            this.http.get(Api.url + `consumer/home/`, { headers: Api.options })
                 .subscribe(
                     (data) => {
                         if (data) {
@@ -74,23 +77,6 @@ export class AuthService {
                             this.logout();
                         }
                         resolve(null);
-                    },
-                );
-        });
-    }
-
-    public refreshAuth(): Promise<boolean> {
-        return new Promise((resolve) => {
-            this.http.post(Api.url + `auth/`, { username: this.data.cpf, password: this.data.password }, { headers: Api.options })
-                .subscribe(
-                    (result: any) => {
-                        localStorage.setItem("logged", "true");
-                        localStorage.setItem("token", JSON.stringify(result.token));
-                        this.updateUserData();
-                        resolve(true);
-                    },
-                    (result) => {
-                        resolve(false);
                     },
                 );
         });
