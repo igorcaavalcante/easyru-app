@@ -1,16 +1,15 @@
 <ion-content *ngIf="ready">
-
-
   <div class="top">
-
     <div>
       <ion-icon name="menu" class="menu-button" (click)="toggle()"></ion-icon>
     </div>
 
     <div class="balance">
       {{this.authService.data.credit | currency:'BRL' | brCurrency}}
-    
-      <p class="balance-text">saldo disponível</p>
+
+      <p class="balance-text">
+        saldo disponível de {{this.authService.data.user.first_name}}
+      </p>
     </div>
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
@@ -18,9 +17,5 @@
         <ion-icon name="qr-scanner" class="qrcode"></ion-icon>
       </ion-fab-button>
     </ion-fab>
-
   </div>
-
-
-
 </ion-content>
