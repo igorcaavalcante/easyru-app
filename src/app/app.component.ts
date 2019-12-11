@@ -78,16 +78,10 @@ export class AppComponent implements OnInit {
 
         this.refreshCheck = setInterval(() => {
             if (this.user && this.user.logged) {
-
-                const limit = (new Date(JSON.parse(this.authService.auth).tokenExpires).getTime() / 1000);
-                const current = new Date().getTime() / 1000;
-
-                if ((limit - current) <= 300) {
-                    this.authService.refreshAuth();
-                }
+                this.authService.refreshAuth();
             }
 
-        }, 5000);
+        }, 180000);
 
     }
 }

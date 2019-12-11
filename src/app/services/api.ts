@@ -10,21 +10,21 @@ export class Api {
 
     public static get options(): HttpHeaders {
 
-        const headers: any = { "Content-Type": "application/json" };
+        const headers: any = {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT",
+            "Accept": "application/json",
+        };
 
         const logged = localStorage.getItem("logged") === "true" ? true : false;
 
 
         if (logged) {
-            headers.authorization = `Bearer ${this.token}`;
+            headers.authorization = `Bearer ${JSON.parse(localStorage.getItem("token"))}`;
         }
 
         return new HttpHeaders(headers);
-    }
-
-    public static get token(): string {
-        const auth = JSON.parse(localStorage.getItem("auth"));
-        return auth.token;
     }
 
     public static get url(): string {

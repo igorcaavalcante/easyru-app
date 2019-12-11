@@ -11,9 +11,9 @@ export class AuthService {
 
     public logged = false;
     public data: any;
-    public auth: any;
+    public token: string;
 
-    public user: Subject<{ logged: boolean, data: any, auth: any }> = new Subject();
+    public user: Subject<{ logged: boolean, data: any, token: string }> = new Subject();
 
     constructor(private http: HttpClient) {
         this.updateUserData();
@@ -26,17 +26,18 @@ export class AuthService {
     public async updateUserData(): Promise<void> {
         this.logged = localStorage.getItem("logged") === "true" ? true : false;
         this.data = this.logged ? await this.getMe() : false;
-        this.auth = localStorage.getItem("auth");
-        this.user.next({ logged: this.logged, data: this.data, auth: this.auth });
+        this.token = localStorage.getItem("token");
+        this.user.next({ logged: this.logged, data: this.data, token: this.token });
     }
 
     public login(cpf: string, password: string): Promise<any> {
         return new Promise((resolve) => {
-            this.http.post(Api.url + `consumer/${cpf}`, { cpf, password }/*, { headers: Api.options }*/)
+            console.log(Api.options);
+            this.http.post(Api.url + `auth/`, { username: cpf, password }, { headers: Api.options })
                 .subscribe(
-                    (result) => {
+                    (result: any) => {
                         localStorage.setItem("logged", "true");
-                        localStorage.setItem("auth", JSON.stringify(result));
+                        localStorage.setItem("token", JSON.stringify(result.token));
                         this.updateUserData();
                         resolve(true);
                     },
@@ -50,7 +51,7 @@ export class AuthService {
     public logout(): Promise<any> {
         return new Promise((resolve) => {
             localStorage.setItem("logged", "false");
-            localStorage.setItem("auth", null);
+            localStorage.setItem("token", null);
             this.updateUserData();
             resolve(true);
         });
@@ -58,7 +59,7 @@ export class AuthService {
 
     private getMe(): Promise<any> {
         return new Promise((resolve) => {
-            this.http.get(Api.url + `consumer/${this.data.cpf}`/*, { headers: Api.options }*/)
+            this.http.get(Api.url + `consumer/`, { headers: Api.options })
                 .subscribe(
                     (data) => {
                         if (data) {
@@ -78,39 +79,17 @@ export class AuthService {
         });
     }
 
-    public register(user: any): Promise<any> {
-        return new Promise((resolve) => {
-            this.http.post(Api.url + "users", { user }, { headers: Api.options })
-                .subscribe(
-                    async () => {
-                        await this.login(user.cpf, user.password);
-                        resolve(true);
-                    },
-                    (result) => {
-                        resolve({ success: false, message: result.error.error });
-                    },
-                );
-        });
-    }
-
     public refreshAuth(): Promise<boolean> {
         return new Promise((resolve) => {
-            this.http.post(
-                Api.url + "users/refresh",
-                { refresh: JSON.parse(this.auth).refresh },
-                { headers: Api.options },
-            )
+            this.http.post(Api.url + `auth/`, { username: this.data.cpf, password: this.data.password }, { headers: Api.options })
                 .subscribe(
-                    (result) => {
+                    (result: any) => {
                         localStorage.setItem("logged", "true");
-                        localStorage.setItem("auth", JSON.stringify(result));
+                        localStorage.setItem("token", JSON.stringify(result.token));
                         this.updateUserData();
                         resolve(true);
                     },
-                    (error) => {
-                        if (error.status === 400 || error.status === 401 || error.status === 404) {
-                            this.logout();
-                        }
+                    (result) => {
                         resolve(false);
                     },
                 );
