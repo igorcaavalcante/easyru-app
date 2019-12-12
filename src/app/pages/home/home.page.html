@@ -5,7 +5,9 @@
     </div>
 
     <div class="balance">
-      <div *ngIf="this.authService.data.is_consumer == false; then thenBlock else elseBlock"></div>
+      <div
+        *ngIf="this.authService.data.is_consumer == false; then thenBlock else elseBlock"
+      ></div>
       <ng-template #thenBlock>
         <div>
           <h1>EasyRU</h1>
@@ -17,11 +19,48 @@
           {{this.authService.data.credit | currency:'BRL' | brCurrency}}
 
           <p class="balance-text">
-            saldo disponível de {{this.authService.data.user.first_name+" "+this.authService.data.user.last_name}}
+            saldo disponível de {{this.authService.data.user.first_name+"
+            "+this.authService.data.user.last_name}}
           </p>
         </div>
       </ng-template>
     </div>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Transações</ion-card-title>
+      </ion-card-header>
+      <ion-card-content *ngIf="transactions.length > 0">
+        <ion-list lines="none" *ngFor="let transaction of transactions">
+          <ion-item (click)="showDetails(transaction)">
+            <ion-icon
+              slot="start"
+              name="add"
+              *ngIf="transaction.type == 'Input'"
+            ></ion-icon>
+            <ion-icon
+              slot="start"
+              name="remove"
+              *ngIf="transaction.type == 'Output'"
+            ></ion-icon>
+            <ion-label
+              class="card-item-description"
+              *ngIf="transaction.type == 'Input'"
+            >
+              Entrada de {{transaction.value | currency:'BRL' | brCurrency}}
+            </ion-label>
+            <ion-label
+              class="card-item-description"
+              *ngIf="transaction.type == 'Output'"
+            >
+              Saída de {{transaction.value | currency:'BRL' | brCurrency}}
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+      <ion-card-content *ngIf="!transactions.length">
+        <p>Nenhuma transação para exibir :(</p>
+      </ion-card-content>
+    </ion-card>
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
       <ion-fab-button [routerLink]="['/qrcode']">
         <ion-icon name="qr-scanner" class="qrcode"></ion-icon>

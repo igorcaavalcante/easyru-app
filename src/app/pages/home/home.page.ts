@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { MenuController } from "@ionic/angular";
 import { AuthService } from "src/app/services/auth/auth.service";
+import { TransactionsService } from 'src/app/services/transactions/transactions.service';
 
 @Component({
     selector: "app-home",
@@ -11,19 +12,23 @@ export class HomePage implements OnInit {
 
     private user: { logged: boolean, data: any };
     public ready = false;
+    public transactions = [];
 
     constructor(
         private menuCtrl: MenuController,
         private authService: AuthService,
+        private transactionsService: TransactionsService
     ) { }
 
-    ngOnInit() {
+    async ngOnInit() {
         this.menuCtrl.enable(true);
-        this.authService.updateUserData();
+        await this.authService.updateUserData();
         this.authService.user.subscribe((user) => {
             this.user = user;
             this.ready = true;
         });
+        this.transactions = (await this.transactionsService.get()).result;
+        this.ready = true;
     }
 
     toggle() {
