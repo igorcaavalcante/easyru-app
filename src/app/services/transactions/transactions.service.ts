@@ -21,5 +21,19 @@ export class TransactionsService {
             );
         });
     }
+
+    public debit(value: number, operator: string, cpf: string): Promise<any> {
+        return new Promise((resolve) => {
+            this.http.post(Api.url + `gru/`, { value, operator, cpf }, { headers: Api.options })
+                .subscribe(
+                    (result) => {
+                        resolve({ success: true, result });
+                    },
+                    (result) => {
+                        resolve({ success: false, message: result.error.error });
+                    },
+                );
+        });
+    }
   
 }

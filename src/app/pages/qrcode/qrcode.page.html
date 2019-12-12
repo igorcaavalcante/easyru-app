@@ -20,4 +20,11 @@
       <ngx-qrcode [(qrc-value)]="code" qrc-version="8"></ngx-qrcode>
     </div>
   </ng-template>
+
+  <div *ngIf="alreadyScan">
+    <ion-input placeholder="Quantidade" [ngModule]="quantity"></ion-input>
+    <ion-button expand="block" (click)="debit('lunch')">Almoço</ion-button>
+    <ion-button expand="block" (click)="debit('dinner')">Janta</ion-button>
+    <ion-button expand="block" (click)="debit('soup')">Sopa</ion-button>
+  </div>
 </ion-content>
