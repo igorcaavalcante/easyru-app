@@ -7,4 +7,17 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="ready"> </ion-content>
+<ion-content *ngIf="ready">
+  <div
+    *ngIf="this.authService.data.is_consumer == false; then thenBlock else elseBlock"
+  ></div>
+  <ng-template #thenBlock>
+    <ion-button expand="block" (click)="scanCode()">Ler QRCode</ion-button>
+  </ng-template>
+
+  <ng-template #elseBlock>
+    <div class="qrcode">
+      <ngx-qrcode [(qrc-value)]="code" qrc-version="8"></ngx-qrcode>
+    </div>
+  </ng-template>
+</ion-content>

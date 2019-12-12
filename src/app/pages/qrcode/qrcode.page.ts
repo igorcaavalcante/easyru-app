@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 import { AuthService } from "src/app/services/auth/auth.service";
 
 @Component({
@@ -10,16 +11,24 @@ export class QrcodePage implements OnInit {
 
     private user: { logged: boolean, data: any };
     public ready = false;
+    qrData = null;
+    private code: string;
+    scannedCode = null;
 
-    constructor(
-        private authService: AuthService,
-    ) { }
+    constructor(private barcodeScanner: BarcodeScanner, private authService: AuthService) { }
 
-    ngOnInit() {
+    async ngOnInit() {
         this.authService.updateUserData();
         this.authService.user.subscribe((user) => {
             this.user = user;
-            this.ready = true;
+        });
+        this.code = await this.authService.data.user_hash;
+        this.ready = true;
+    }
+
+    scanCode() {
+        this.barcodeScanner.scan().then(barcodeData => {
+            this.scannedCode = barcodeData.text;
         });
     }
 

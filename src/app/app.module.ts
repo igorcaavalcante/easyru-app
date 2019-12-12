@@ -3,6 +3,8 @@ import { BrowserModule } from "@angular/platform-browser";
 import { RouteReuseStrategy } from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
+import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
+import { NgxQRCodeModule } from "ngx-qrcode2";
 
 import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
@@ -33,11 +35,13 @@ import { BrCurrencyPipe } from "./pipes/br-currency.pipe";
     HttpClientModule,
     FormsModule,
     BrMaskerModule,
+    NgxQRCodeModule,
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    BarcodeScanner
   ],
   bootstrap: [AppComponent]
 })

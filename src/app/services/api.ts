@@ -23,6 +23,6 @@ export class Api {
     }
 
     public static get url(): string {
-        return "https://easyru-backend.herokuapp.com/api/";
+        return "http://127.0.0.1:8000/api/";
     }
 }
