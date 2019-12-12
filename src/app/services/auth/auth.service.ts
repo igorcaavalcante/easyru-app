@@ -61,8 +61,8 @@ export class AuthService {
 
     private getMe(): Promise<any> {
         return new Promise((resolve) => {
-            console.log(Api.url + `consumer/home/`);
-            this.http.get(Api.url + `consumer/home/`, { headers: Api.options })
+            console.log(Api.url + `user/me/`);
+            this.http.get(Api.url + `user/me/`, { headers: Api.options })
                 .subscribe(
                     (data) => {
                         if (data) {

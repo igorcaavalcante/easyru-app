@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
     private refreshCheck: any;
 
     constructor(
+        public auth: AuthService,
         private platform: Platform,
         private loadingController: LoadingController,
         private splashScreen: SplashScreen,
@@ -62,5 +63,9 @@ export class AppComponent implements OnInit {
         this.authService.updateUserData();
 
         loading.dismiss();
+    }
+
+    async logout() {
+        const logout = await this.auth.logout();
     }
 }
