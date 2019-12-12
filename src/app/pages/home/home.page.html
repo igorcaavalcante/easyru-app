@@ -5,11 +5,16 @@
     </div>
 
     <div class="balance">
-      {{this.authService.data.credit | currency:'BRL' | brCurrency}}
+      <div *ngIf="this.authService.data.type !== 'operator'">
+        {{this.authService.data.credit | currency:'BRL' | brCurrency}}
 
-      <p class="balance-text">
-        saldo disponível de {{this.authService.data.user.first_name}}
-      </p>
+        <p class="balance-text">
+          saldo disponível de {{this.authService.data.user.first_name}}
+        </p>
+      </div>
+      <div *ngIf="this.authService.data.type === 'operator'">
+        <h1>EasyRU</h1>
+      </div>
     </div>
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
