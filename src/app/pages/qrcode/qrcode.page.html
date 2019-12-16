@@ -11,7 +11,7 @@
   <div
     *ngIf="this.authService.data.is_consumer == false; then thenBlock else elseBlock"
   ></div>
-  <ng-template #thenBlock>
+  <ng-template #thenBlock *ngIf="!consumer">
     <ion-button expand="block" (click)="scanCode()">Ler QRCode</ion-button>
   </ng-template>
 
@@ -21,8 +21,11 @@
     </div>
   </ng-template>
 
-  <div *ngIf="alreadyScan">
-    <ion-input placeholder="Quantidade" [ngModule]="quantity"></ion-input>
+  <div class="options" *ngIf="alreadyScan">
+    <ion-item>
+      <ion-label position="floating">Quantidade</ion-label>
+      <ion-input [(ngModel)]="quantity"></ion-input>
+    </ion-item>
     <ion-button expand="block" (click)="debit('lunch')">Almoço</ion-button>
     <ion-button expand="block" (click)="debit('dinner')">Janta</ion-button>
     <ion-button expand="block" (click)="debit('soup')">Sopa</ion-button>

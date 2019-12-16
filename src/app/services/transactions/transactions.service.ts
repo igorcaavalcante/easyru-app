@@ -3,11 +3,11 @@ import { HttpClient } from "@angular/common/http";
 import { Api, DefaultResponse } from '../api';
 
 @Injectable({
-  providedIn: "root"
+    providedIn: "root"
 })
 export class TransactionsService {
 
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { }
 
     public get(): Promise<DefaultResponse> {
         return new Promise((resolve) => {
@@ -22,9 +22,16 @@ export class TransactionsService {
         });
     }
 
-    public debit(value: number, operator: string, cpf: string): Promise<any> {
+    public debit(value: number, operator: string, cpf: string, hash: string): Promise<any> {
         return new Promise((resolve) => {
-            this.http.post(Api.url + `gru/`, { value, operator, cpf }, { headers: Api.options })
+            this.http.post(Api.url + `transactions/`, {
+                type: "Output",
+                value,
+                operator,
+                consumer_cpf: cpf,
+                hash
+            },
+                { headers: Api.options })
                 .subscribe(
                     (result) => {
                         resolve({ success: true, result });
@@ -35,5 +42,5 @@ export class TransactionsService {
                 );
         });
     }
-  
+
 }
