@@ -35,12 +35,13 @@ export class QrcodePage implements OnInit {
         this.authService.user.subscribe((user) => {
             this.user = user;
         });
+        this.code = this.authService.data.user_hash;
         this.ready = true;
     }
 
     scanCode() {
         this.barcodeScanner.scan().then(async barcodeData => {
-            this.consumer = await this.utilsService.getUser(barcodeData);
+            this.consumer = await this.utilsService.getUser(barcodeData.text);
             if (!this.consumer) {
                 const errorAlert = await this.alertController.create({
                     header: "Usuário não encontrado",
@@ -48,7 +49,7 @@ export class QrcodePage implements OnInit {
                 });
                 await errorAlert.present();
             } else {
-                this.hash = barcodeData;
+                this.hash = barcodeData.text;
                 this.alreadyScan = true;
             }
         });

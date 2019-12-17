@@ -11,7 +11,7 @@
   <div
     *ngIf="this.authService.data.is_consumer == false; then thenBlock else elseBlock"
   ></div>
-  <ng-template #thenBlock *ngIf="!consumer">
+  <ng-template #thenBlock>
     <ion-button expand="block" (click)="scanCode()">Ler QRCode</ion-button>
   </ng-template>
 
