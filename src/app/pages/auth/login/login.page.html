@@ -13,7 +13,7 @@
 
         <ion-item class="loginFormButtons">
           <ion-label position="floating">CPF</ion-label>
-          <ion-input [class.is-danger]="user.cpf.message" [(ngModel)]="user.cpf.value" type="text"
+          <ion-input [class.is-danger]="user.cpf.message" [(ngModel)]="user.cpf.value" type="tel"
             [brmasker]="{mask: '000.000.000-00', type:'num'}" maxlength="14">
           </ion-input>
           <p *ngIf="user.cpf.message" class="danger">{{ user.cpf.message }}</p>
