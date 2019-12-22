@@ -68,7 +68,7 @@
     </ion-fab>
   </div>
 
-  <div class ="instruction">
+  <div class ="instruction" *ngIf="this.authService.data.is_consumer == false">
       <h1 class= "head">Instruções</h1>
       <p>Aplicação para funcionarios do Restaurante Universitário da UFAL
       </p>

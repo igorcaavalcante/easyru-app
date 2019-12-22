@@ -22,6 +22,9 @@
   </ng-template>
 
   <div class="options" *ngIf="alreadyScan">
+
+    <strong style="text-align: center;">Nome: {{this.consumer.user.first_name+" "+this.consumer.user.last_name}}</strong>
+
     <ion-item>
       <ion-label position="floating">Quantidade</ion-label>
       <ion-input [(ngModel)]="quantity"></ion-input>
